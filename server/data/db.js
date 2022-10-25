@@ -4,11 +4,10 @@ const connectDb = () => {
   const options = {
     useUnifiedTopology: true,
     useNewUrlParser: true,
+
   };
   try {
-    mongoose.connect(process.env.MONGO_URL, options).then(() => {
-      
-    });
+    mongoose.connect(process.env.MONGO_URL, options).then(() => {});
   } catch (err) {
     console.log({ error: err.message });
   }

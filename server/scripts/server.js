@@ -8,7 +8,7 @@ const connectDb = require("../data/db");
 connectDb();
 
 mongoose.connection.once("open", () => {
-  console.log("Database connection established".cyan);
+  console.log("::Database Connection Established::".bold.cyan.underline);
   const PORT = process.env.PORT;
   app.listen(PORT, () =>
     console.log(`Server listening on port ${PORT}`.yellow)

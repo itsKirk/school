@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import AppBar from '@mui/material/AppBar';
@@ -22,13 +21,20 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
+import { useState } from 'react';
+import '../index.css'
 const pages = ['Products', 'Pricing', 'Blog'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 const drawerWidth = 240;
 
 export default function Layout({ children }) {
-    const [anchorElNav, setAnchorElNav] = React.useState(null);
-    const [anchorElUser, setAnchorElUser] = React.useState(null);
+    const [anchorElNav, setAnchorElNav] = useState(null);
+    const [anchorElUser, setAnchorElUser] = useState(null);
+    const homeMenu = ['Inbox', 'Starred', 'Send email', 'Drafts'];
+    const productsMenu = ['Categories', 'Favourites', 'Trending'];
+    const pricingMenu = ['Free', 'Medium', 'Jumbo', 'Gold', 'Silver', 'Platinum'];
+    const blogMenu = ['All Blogs', 'Review Blog', 'Create Blog'];
+    const [drawerMenu, setDrawerMenu] = useState(homeMenu);
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
@@ -36,7 +42,21 @@ export default function Layout({ children }) {
     const handleOpenUserMenu = (event) => {
         setAnchorElUser(event.currentTarget);
     };
-
+    const LoadPageDrawer = (event) => {
+        switch (event.currentTarget.textContent) {
+            case 'Products':
+                setDrawerMenu(productsMenu)
+                event.currentTarget.classList.add('activeMenu')
+                break;
+            case 'Pricing':
+                setDrawerMenu(pricingMenu)
+                break;
+            case 'Blog':
+                setDrawerMenu(blogMenu)
+                break;
+            default: setDrawerMenu(homeMenu)
+        }
+    }
     const handleCloseNavMenu = () => {
         setAnchorElNav(null);
     };
@@ -99,7 +119,7 @@ export default function Layout({ children }) {
                                 }}
                             >
                                 {pages.map((page) => (
-                                    <MenuItem key={page} onClick={handleCloseNavMenu}>
+                                    <MenuItem key={page} onClick={(e) => LoadPageDrawer(e)}>
                                         <Typography textAlign="center">{page}</Typography>
                                     </MenuItem>
                                 ))}
@@ -128,8 +148,8 @@ export default function Layout({ children }) {
                             {pages.map((page) => (
                                 <Button
                                     key={page}
-                                    onClick={handleCloseNavMenu}
-                                    sx={{ my: 2, color: 'white', display: 'block' }}
+                                    onClick={(e) => LoadPageDrawer(e)}
+                                    sx={{ my: 2, color: '#fff', display: 'block' }}
                                 >
                                     {page}
                                 </Button>
@@ -139,7 +159,7 @@ export default function Layout({ children }) {
                         <Box sx={{ flexGrow: 0 }}>
                             <Tooltip title="Open settings">
                                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                    <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                                    <Avatar alt="Kirk" src="/static/images/avatar/2.jpg" />
                                 </IconButton>
                             </Tooltip>
                             <Menu
@@ -179,9 +199,9 @@ export default function Layout({ children }) {
                 <Toolbar />
                 <Box sx={{ overflow: 'auto' }}>
                     <List>
-                        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+                        {drawerMenu.map((text, index) => (
                             <ListItem key={text} disablePadding>
-                                <ListItemButton>
+                                <ListItemButton >
                                     <ListItemIcon>
                                         {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
                                     </ListItemIcon>
@@ -191,7 +211,7 @@ export default function Layout({ children }) {
                         ))}
                     </List>
                     <Divider />
-                    <List>
+                    {/* <List>
                         {['All mail', 'Trash', 'Spam'].map((text, index) => (
                             <ListItem key={text} disablePadding>
                                 <ListItemButton>
@@ -202,13 +222,13 @@ export default function Layout({ children }) {
                                 </ListItemButton>
                             </ListItem>
                         ))}
-                    </List>
+                    </List> */}
                 </Box>
             </Drawer>
             <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
                 <Toolbar />
                 {children}
             </Box>
-        </Box>
+        </Box >
     );
 }

@@ -1,37 +1,10 @@
 import Layout from "./components/Layout";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./components/Home";
-import { ThemeProvider, createTheme } from "@mui/material";
 import Login from "./components/Login";
+import { ThemeProvider } from "@mui/material";
+import theme from "./utilities/appTheme";
 
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: "#ff6c37",
-      contrastText: "#001e3c",
-    },
-    secondary: {
-      main: "#01a5e6",
-      contrastText: "#fff",
-    },
-
-  },
-  typography: {
-    fontFamily: "Nunito",
-    fontSize: 16,
-    fontWeightLight: 600,
-    fontWeightRegular: 700,
-    fontWeightMedium: 800,
-    fontWeightBold: 900,
-  },
-  components: {
-    MuiButtonBase: {
-      defaultProps: {
-        disableRipple: true,
-      },
-    },
-  },
-});
 function App() {
   return (
     <BrowserRouter>
